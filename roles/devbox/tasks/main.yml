@@ -1,0 +1,87 @@
+---
+
+# - repos ?
+#  - backports
+#  - pgdg
+# x update
+# x upgrade
+# x packages: build-essentials, git, hg, vim-gtk, i3, ffx, ag, ctags, zsh, tmux, ruby, fonts?
+# - vbox exts?
+# - default x session
+# - user
+#  - dotfiles
+#  - authorized keys?
+#  - ssh ids from vault? pgp?
+#  - homedir-setup
+#  - sudo group
+#  - plenv - rbenv build?
+
+- include: debian.yml
+  when: ansible_distribution == 'Debian'
+
+- name: Enable sudo for sudo group
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL:ALL) ALL'
+
+- name: User setup
+  user:
+    name: "{{user.name}}"
+    comment: "{{user.comment}}"
+    shell: /bin/zsh
+    groups: sudo
+    append: true
+  register: user
+
+- name: Pubkey for user
+  authorized_key:
+    manage_dir: true
+    user: "{{user.name}}"
+    key: "{{item}}"
+  with_file:
+    - public_keys/{{user.name}}
+
+- name: Ensure hostkeys
+  sudo: true
+  sudo_user: "{{user.name}}"
+  lineinfile:
+    dest: "{{user.home}}/.ssh/known_hosts"
+    state: present
+    line: "{{item.value}}"
+    create: true
+    mode: 0600
+  with_dict: hostkeys
+
+- name: Purge hostkeys
+  sudo: true
+  sudo_user: "{{user.name}}"
+  lineinfile:
+    dest: "{{user.home}}/.ssh/known_hosts"
+    state: absent
+    line: "{{item.value}}"
+  with_dict: hostkeys_removed
+
+- name: Check for dotfiles checkout in homedir
+  stat: path={{user.home}}/.hg
+  register: dotfiles
+
+- name: Clone dotfiles
+  when: dotfiles.stat.exists == false
+  shell: >
+    hg clone -U {{dotfiles_repository}} {{user.home}}/_dotfiles_
+    && mv {{user.home}}/_dotfiles_/.hg {{user.home}}
+    && rmdir {{user.home}}/_dotfiles_
+    && chown -R {{user.name}}:{{user.group}} {{user.home}}/.hg
+    && sudo -u {{user.name}} hg -R {{user.home}} update -C
+
+- name: Run homedir-setup
+  sudo: true
+  sudo_user: "{{user.name}}"
+  shell: ./.homedir-setup.rb -su chdir={{user.home}}
+  register: homedir_setup
+  changed_when: homedir_setup.stdout | match("Updating|Installing")
+  failed_when: homedir_setup.rc != 0
+
+

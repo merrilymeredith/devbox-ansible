@@ -1,0 +1,59 @@
+---
+
+- name: add backports
+  apt_repository:
+    repo: "deb http://http.debian.net/debian {{ansible_distribution_release}}-backports main"
+
+- name: apt upgrade
+  apt: upgrade=yes update_cache=yes cache_valid_time=3600 
+  tags: packages, upgrade
+
+- name: Install base packages
+  apt: name={{item}} state=installed
+  with_items:
+    - sudo
+    - build-essential
+    - git
+    - mercurial
+    - vim
+    - exuberant-ctags
+    - silversearcher-ag
+    - zsh
+    - tmux
+    - ruby
+  tags: packages, install
+
+- name: Install GUI packages
+  when: with_gui
+  apt: name={{item}} state=installed
+  with_items:
+    - i3
+    - vim-gtk
+    - iceweasel
+    - fonts-dejavu-extra
+    - fonts-opensymbol
+  tags: packages, install
+
+- name: Install Extra packages
+  apt: name={{item}} state=installed
+  with_items: extra_packages
+  tags: packages, install
+
+
+- name: Check for lightdm.conf
+  when: with_gui
+  stat:
+    path: /etc/lightdm/lightdm.conf
+  register: lightdmconf
+
+- name: Set default X session to i3
+  when: with_gui and lightdmconf.stat.exists
+  ini_file:
+    dest: /etc/lightdm/lightdm.conf
+    section: SeatDefaults
+    option: user-session
+    value: i3
+    backup: true
+  notify:
+  - restart lightdm
+

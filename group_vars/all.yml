@@ -1,0 +1,13 @@
+---
+
+user:
+  name:    mhoward
+  comment: Meredith Howard
+
+with_gui: true
+
+dotfiles_repository: ssh://mhoward@roomag.org/proj/dotfiles
+
+hostkeys:
+  roomag.org: "|1|9luVS5b1COPzsVIoHy3SZyFO7+w=|ofEQRdPBaHKq635vwgADi4+o8cM= ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIlCnrGFQ7LiR4HPUv11Qp9d4vhctwqihA4+TBnYORm088OZMyC9WcqcsD5uOKrLSjireBmxEDMat0W7rKgJnpo="
+
