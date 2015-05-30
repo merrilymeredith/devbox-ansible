@@ -1,5 +1,6 @@
 ---
 
+# Not used here, but nice to have ready
 - name: add backports
   apt_repository:
     repo: "deb http://http.debian.net/debian {{ansible_distribution_release}}-backports main"
@@ -40,14 +41,8 @@
   tags: packages, install
 
 
-- name: Check for lightdm.conf
-  when: with_gui
-  stat:
-    path: /etc/lightdm/lightdm.conf
-  register: lightdmconf
-
 - name: Set default X session to i3
-  when: with_gui and lightdmconf.stat.exists
+  when: with_gui
   ini_file:
     dest: /etc/lightdm/lightdm.conf
     section: SeatDefaults

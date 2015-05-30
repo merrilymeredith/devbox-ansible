@@ -1,24 +1,10 @@
 ---
 
-# - repos ?
-#  - backports
-#  - pgdg
-# x update
-# x upgrade
-# x packages: build-essentials, git, hg, vim-gtk, i3, ffx, ag, ctags, zsh, tmux, ruby, fonts?
-# - vbox exts?
-# - default x session
-# - user
-#  - dotfiles
-#  - authorized keys?
-#  - ssh ids from vault? pgp?
-#  - homedir-setup
-#  - sudo group
-#  - plenv - rbenv build?
-
 - include: debian.yml
   when: ansible_distribution == 'Debian'
 
+
+# sudo may not be everywhere. wheel is a common alternative
 - name: Enable sudo for sudo group
   lineinfile:
     dest: /etc/sudoers
@@ -26,6 +12,8 @@
     regexp: '^%sudo'
     line: '%sudo ALL=(ALL:ALL) ALL'
 
+
+# Create/update my user, don't clobber my extra groups.
 - name: User setup
   user:
     name: "{{user.name}}"
@@ -35,7 +23,8 @@
     append: true
   register: user
 
-- name: Pubkey for user
+
+- name: ssh | Pubkey for user
   authorized_key:
     manage_dir: true
     user: "{{user.name}}"
@@ -43,7 +32,7 @@
   with_file:
     - public_keys/{{user.name}}
 
-- name: Ensure hostkeys
+- name: ssh | Ensure known_hosts keys
   sudo: true
   sudo_user: "{{user.name}}"
   lineinfile:
@@ -54,7 +43,7 @@
     mode: 0600
   with_dict: hostkeys
 
-- name: Purge hostkeys
+- name: ssh | Purge invalid known_hosts keys
   sudo: true
   sudo_user: "{{user.name}}"
   lineinfile:
@@ -63,6 +52,10 @@
     line: "{{item.value}}"
   with_dict: hostkeys_removed
 
+
+# I like to make my ~ my dotfiles working directory (some folks symlink
+# everything) Here that means I clone, move hg, then checkout, clobbering any
+# conflicts with /etc/skel stuff.
 - name: Check for dotfiles checkout in homedir
   stat: path={{user.home}}/.hg
   register: dotfiles
@@ -76,6 +69,9 @@
     && chown -R {{user.name}}:{{user.group}} {{user.home}}/.hg
     && sudo -u {{user.name}} hg -R {{user.home}} update -C
 
+
+# This is an existing script that clones/updates oh-my-zsh, rbenv, and plenv.
+# My dotfiles use each if the right directory exists.
 - name: Run homedir-setup
   sudo: true
   sudo_user: "{{user.name}}"
