@@ -1,9 +1,15 @@
 ---
 
 # Not used here, but nice to have ready
-- name: add backports
+- name: add backports repo
   apt_repository:
     repo: "deb http://http.debian.net/debian {{ansible_distribution_release}}-backports main"
+  tags: repos
+
+- name: add pgdg repo
+  apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main"
+  tags: repos
 
 - name: apt upgrade
   apt: upgrade=yes update_cache=yes cache_valid_time=3600 
