@@ -4,7 +4,9 @@ user:
   name:    mhoward
   comment: Meredith Howard
 
-with_gui: true
+gui:
+  enabled: false
+  session: "i3"
 
 dotfiles_repository: ssh://mhoward@roomag.org/proj/dotfiles
 

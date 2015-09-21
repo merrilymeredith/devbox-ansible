@@ -25,7 +25,7 @@
   tags: packages, install
 
 - name: Install GUI packages
-  when: with_gui
+  when: gui.enabled
   apt: name={{item}} state=installed
   with_items:
     - i3
@@ -41,13 +41,13 @@
   tags: packages, install
 
 
-- name: Set default X session to i3
-  when: with_gui
+- name: Set default X session in lightdm
+  when: gui.session
   ini_file:
     dest: /etc/lightdm/lightdm.conf
     section: SeatDefaults
     option: user-session
-    value: i3
+    value: "{{gui.session}}"
     backup: true
   notify:
   - restart lightdm
