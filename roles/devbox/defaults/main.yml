@@ -1,6 +1,8 @@
 ---
 
-with_gui: false
+gui:
+  enabled: false
+  session: "i3"
 
 extra_packages: []
 
