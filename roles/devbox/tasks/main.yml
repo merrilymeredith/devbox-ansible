@@ -82,9 +82,9 @@
 - name: Run homedir-setup
   sudo: true
   sudo_user: "{{user.name}}"
-  shell: ./.homedir-setup.rb -su chdir={{user.home}}
+  shell: bin/homedir-setup chdir={{user.home}}
   register: homedir_setup
-  changed_when: homedir_setup.stdout | match("Updating|Installing")
+  changed_when: homedir_setup.stdout | match("Updating|Cloning")
   failed_when: homedir_setup.rc != 0
   tags: user, install
 
