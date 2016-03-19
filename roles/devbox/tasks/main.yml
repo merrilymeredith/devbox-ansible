@@ -50,7 +50,7 @@
     line: "{{item.value}}"
     create: true
     mode: 0600
-  with_dict: hostkeys
+  with_dict: "{{hostkeys}}"
   tags: user, ssh
 
 - name: ssh | Purge invalid known_hosts keys
@@ -60,7 +60,7 @@
     dest: "{{user.home}}/.ssh/known_hosts"
     state: absent
     line: "{{item.value}}"
-  with_dict: hostkeys_removed
+  with_dict: "{{hostkeys_removed}}"
   tags: user, ssh
 
 

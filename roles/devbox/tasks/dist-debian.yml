@@ -46,7 +46,7 @@
 
 - name: Install Extra packages
   apt: name={{item}} state=installed
-  with_items: extra_packages
+  with_items: "{{extra_packages}}"
   tags: packages, install
 
 
