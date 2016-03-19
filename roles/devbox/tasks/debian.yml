@@ -27,7 +27,6 @@
     - silversearcher-ag
     - zsh
     - tmux
-    - ruby
   tags: packages, install
 
 - name: Install GUI packages
