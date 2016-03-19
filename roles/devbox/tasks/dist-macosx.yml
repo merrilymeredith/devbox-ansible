@@ -1,0 +1,16 @@
+---
+
+- name: Install base packages
+  macports: name={{item}} state=active
+  with_items:
+    - git
+    - mercurial
+    - MacVim
+    - ctags
+    - the_silver_searcher
+    - zsh
+    - tmux
+    - dejavu-fonts
+  tags: packages, install
+
+
