@@ -1,5 +1,8 @@
 ---
 
+- name: add python-apt
+  apt: name=python-apt state=installed
+
 # Not used here, but nice to have ready
 - name: add backports repo
   apt_repository:
@@ -7,6 +10,7 @@
   tags: repos
 
 - name: add pgdg repo
+  when: ansible_architecture == 'amd64'
   apt_repository:
     repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main"
   tags: repos
@@ -16,7 +20,7 @@
   tags: packages, upgrade
 
 - name: Install base packages
-  apt: name={{item}} state=installed
+  apt: name={{item}} state=installed default_release={{ansible_distribution_release}}-backports
   with_items:
     - sudo
     - build-essential
@@ -31,7 +35,7 @@
 
 - name: Install GUI packages
   when: gui.enabled
-  apt: name={{item}} state=installed
+  apt: name={{item}} state=installed default_release={{ansible_distribution_release}}-backports
   with_items:
     - i3
     - vim-gtk
