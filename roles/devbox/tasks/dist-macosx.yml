@@ -1,5 +1,10 @@
 ---
 
+# have to:
+# - install/enable xcode
+# - install macports
+# - set macports in /etc/paths.d/ ?
+
 - name: Install base packages
   macports: name={{item}} state=active
   with_items:
