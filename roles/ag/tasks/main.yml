@@ -1,10 +1,7 @@
 ---
-
 - include_vars: "{{ansible_os_family}}.yml"
 
 - package:
-    name: "{{ ag_package }}"
+    name: "{{ dist_package }}"
     state: latest
   tags: packages, install
-  when: ansible_os_family == 'Debian'
-
