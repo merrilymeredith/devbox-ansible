@@ -1,3 +1,8 @@
 [localhost]
 localhost	ansible_connection=local
 
+[rpi]
+raspberrypi
+
+[devbox:children]
+localhost
