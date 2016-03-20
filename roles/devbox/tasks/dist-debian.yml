@@ -42,6 +42,7 @@
     - iceweasel
     - fonts-dejavu-extra
     - fonts-opensymbol
+    - scrot
   tags: packages, install
 
 - name: Install Extra packages
