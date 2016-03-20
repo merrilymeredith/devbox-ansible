@@ -22,14 +22,9 @@
 - name: Install base packages
   apt: name={{item}} state=installed default_release={{ansible_distribution_release}}-backports
   with_items:
-    - sudo
     - build-essential
-    - git
-    - mercurial
     - vim
     - exuberant-ctags
-    - silversearcher-ag
-    - zsh
     - tmux
   tags: packages, install
 

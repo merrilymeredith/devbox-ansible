@@ -1,0 +1,7 @@
+---
+
+- package:
+    name: git
+    state: latest
+  tags: packages, install
+

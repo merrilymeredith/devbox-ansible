@@ -1,0 +1,20 @@
+---
+
+- package:
+    name: sudo
+    state: latest
+  tags: packages, install
+
+- name: sudo group
+  group:
+    name: sudo
+    state: present
+    system: yes
+
+- name: sudo permission for sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL:ALL) ALL'
+

@@ -1,0 +1,75 @@
+---
+
+# Create/update my user, don't clobber my extra groups.
+- name: User setup
+  user:
+    name: "{{user.name}}"
+    comment: "{{user.comment}}"
+    shell: /bin/zsh
+    groups: sudo
+    append: true
+  register: user
+  tags: user
+
+- name: ssh | Pubkey for user
+  authorized_key:
+    manage_dir: true
+    user: "{{user.name}}"
+    key: "{{item}}"
+  with_file:
+    - public_keys/{{user.name}}
+  tags: user, ssh
+
+- name: ssh | Ensure known_hosts keys
+  become: true
+  become_user: "{{user.name}}"
+  lineinfile:
+    dest: "{{user.home}}/.ssh/known_hosts"
+    state: present
+    line: "{{item.value}}"
+    create: true
+    mode: 0600
+  with_dict: "{{hostkeys}}"
+  tags: user, ssh
+
+- name: ssh | Purge invalid known_hosts keys
+  become: true
+  become_user: "{{user.name}}"
+  lineinfile:
+    dest: "{{user.home}}/.ssh/known_hosts"
+    state: absent
+    line: "{{item.value}}"
+  with_dict: "{{hostkeys_removed}}"
+  tags: user, ssh
+
+
+# I like to make my ~ my dotfiles working directory (some folks symlink
+# everything) Here that means I clone, move hg, then checkout, clobbering any
+# conflicts with /etc/skel stuff.
+- name: Check for dotfiles checkout in homedir
+  stat: path={{user.home}}/.hg
+  register: dotfiles
+  tags: user, dotfiles
+
+- name: Clone dotfiles
+  when: dotfiles.stat.exists == false
+  shell: >
+    hg clone -U {{dotfiles_repository}} {{user.home}}/_dotfiles_
+    && mv {{user.home}}/_dotfiles_/.hg {{user.home}}
+    && rmdir {{user.home}}/_dotfiles_
+    && chown -R {{user.name}}:{{user.group}} {{user.home}}/.hg
+    && sudo -u {{user.name}} hg -R {{user.home}} update -C
+  tags: user, dotfiles
+
+
+# This is an existing script that clones/updates zgen, rbenv, and plenv.
+# My dotfiles use each if the right directory exists.
+- name: Run homedir-setup
+  become: true
+  become_user: "{{user.name}}"
+  shell: bin/homedir-setup chdir={{user.home}}
+  register: homedir_setup
+  changed_when: homedir_setup.stdout | match("Updating|Cloning")
+  failed_when: homedir_setup.rc != 0
+  tags: user, install
+
