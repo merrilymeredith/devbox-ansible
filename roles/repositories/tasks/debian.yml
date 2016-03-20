@@ -10,7 +10,7 @@
   tags: repos
 
 - name: add pgdg repo
-  when: ansible_architecture in ['i386', 'x86_64']
+  when: ansible_architecture in ["i386", "x86_64"]
   apt_repository:
     repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main"
   tags: repos
