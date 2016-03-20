@@ -1,0 +1,7 @@
+---
+
+- package:
+    name: tmux
+    state: latest
+  tags: packages, install
+
