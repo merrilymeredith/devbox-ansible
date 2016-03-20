@@ -1,0 +1,14 @@
+---
+- include_vars: "{{ansible_os_family}}.yml"
+
+- package:
+    name: "{{dist_package.base}}"
+    state: latest
+  tags: packages, install
+
+- name: gui package
+  package:
+    name: "{{dist_package.gui}}"
+    state: latest
+  when: dist_package.gui and gui.enabled
+  tags: packages, install

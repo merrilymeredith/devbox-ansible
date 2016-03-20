@@ -8,3 +8,5 @@ dependencies:
   - ag
   - ctags
   - tmux
+  - vim
+  - {role: firefox, when: gui.enabled}

@@ -1,0 +1,4 @@
+---
+dist_package:
+  base: vim
+  gui: vim-gtk

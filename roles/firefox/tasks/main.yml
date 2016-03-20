@@ -1,0 +1,10 @@
+---
+- apt_repository:
+    repo: "deb http://mozilla.debian.net/ {{ansible_distribution_release}}-backports firefox-release"
+  when: ansible_os_family == 'Debian'
+  tags: repos
+
+- package:
+    name: firefox
+    state: latest
+  tags: packages, install

@@ -1,10 +1,9 @@
 ---
 
 - name: Install base packages
-  apt: name={{item}} state=installed default_release={{ansible_distribution_release}}-backports
+  apt: name={{item}} state=installed
   with_items:
     - build-essential
-    - vim
   tags: packages, install
 
 - name: Install GUI packages
@@ -12,8 +11,6 @@
   apt: name={{item}} state=installed default_release={{ansible_distribution_release}}-backports
   with_items:
     - i3
-    - vim-gtk
-    - iceweasel
     - fonts-dejavu-extra
     - fonts-opensymbol
     - scrot
