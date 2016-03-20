@@ -1,11 +1,6 @@
 ---
 - hosts: all
   roles:
-    - repositories
-    - sudo
-    - zsh
-    - ag
-    - mercurial
     - devbox
     - user
 
