@@ -2,6 +2,9 @@
 dependencies:
   - repositories
   - sudo
+  - git
+  - mercurial
   - zsh
   - ag
-  - mercurial
+  - ctags
+  - tmux

@@ -5,8 +5,6 @@
   with_items:
     - build-essential
     - vim
-    - exuberant-ctags
-    - tmux
   tags: packages, install
 
 - name: Install GUI packages
