@@ -28,7 +28,7 @@
 
 
 - name: Set default X session in lightdm
-  when: gui.session
+  when: gui.enabled and gui.session
   ini_file:
     dest: /etc/lightdm/lightdm.conf
     section: SeatDefaults
