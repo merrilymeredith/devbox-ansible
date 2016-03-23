@@ -10,7 +10,7 @@
   register: user
   tags: user
 
-- name: ssh : Pubkey for user
+- name: "ssh : Pubkey for user"
   authorized_key:
     manage_dir: true
     user: "{{user.name}}"
@@ -19,7 +19,7 @@
     - public_keys/{{user.name}}
   tags: user, ssh
 
-- name: ssh : Ensure known_hosts keys
+- name: "ssh : Ensure known_hosts keys"
   become: true
   become_user: "{{user.name}}"
   lineinfile:
@@ -31,7 +31,7 @@
   with_dict: "{{hostkeys}}"
   tags: user, ssh
 
-- name: ssh : Purge invalid known_hosts keys
+- name: "ssh : Purge invalid known_hosts keys"
   become: true
   become_user: "{{user.name}}"
   lineinfile:
