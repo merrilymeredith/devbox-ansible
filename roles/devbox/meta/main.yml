@@ -2,4 +2,3 @@
 dependencies:
   - repositories
   - sudo
-  - {role: firefox, when: gui.enabled}

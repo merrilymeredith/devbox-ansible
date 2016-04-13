@@ -14,7 +14,7 @@
   tags: packages, install
 
 - name: Install GUI packages
-  when: gui.enabled
+  when: gui_enabled
   apt: name={{item}} state=installed
   with_items:
     - i3
@@ -34,6 +34,13 @@
     backup: true
   notify:
   - reload lightdm
+
+- name: Enable and start lightdm
+  when: gui_enabled
+  service:
+    name: lightdm
+    enabled: yes
+    state: started
 
 - apt_repository:
     repo: "deb http://mozilla.debian.net/ {{ansible_distribution_release}}-backports firefox-release"
