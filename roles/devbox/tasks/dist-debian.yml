@@ -17,6 +17,7 @@
   when: gui_enabled
   apt: name={{item}} state=installed
   with_items:
+    - lightdm
     - i3
     - fonts-dejavu-extra
     - fonts-opensymbol
