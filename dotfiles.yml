@@ -1,9 +1,11 @@
 ---
+# This is a playbook to run as myself, with agent forwarding, to pull down my
+# private dotfiles and set up.
+
 - hosts: devbox
   gather_facts: false
   tasks:
     - name: Clone dotfiles
-      become_user: "{{user.name}}"
       shell: >
         hg clone -U {{dotfiles_repository | quote}} _dotfiles_
         && mv _dotfiles_/.hg .
@@ -14,7 +16,6 @@
         creates: "~/.hg"
 
     - name: Update dotfiles
-      become_user: "{{user.name}}"
       command: hg pull -u
       args:
         chdir: "~"
@@ -22,9 +23,8 @@
       changed_when: update_dotfiles.stdout | match("added|updated")
       failed_when: update_dotfiles.rc > 1
 
-    - name: Run homedir-setup
-      become_user: "{{user.name}}"
-      shell: bin/homedir-setup
+    - name: Run bin/homedir-setup
+    - shell: bin/homedir-setup
       args:
         chdir: "~"
       register: homedir_setup
