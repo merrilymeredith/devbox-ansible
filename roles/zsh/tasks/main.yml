@@ -1,7 +1,0 @@
----
-
-- package:
-    name: zsh
-    state: latest
-  tags: packages, install
-

@@ -1,7 +1,0 @@
----
-
-- package:
-    name: mercurial
-    state: latest
-  tags: packages, install
-
