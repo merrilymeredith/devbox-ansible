@@ -2,11 +2,4 @@
 dependencies:
   - repositories
   - sudo
-  - git
-  - mercurial
-  - zsh
-  - ag
-  - ctags
-  - tmux
-  - vim
   - {role: firefox, when: gui.enabled}

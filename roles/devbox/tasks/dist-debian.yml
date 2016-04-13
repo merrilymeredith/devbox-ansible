@@ -4,6 +4,13 @@
   apt: name={{item}} state=installed
   with_items:
     - build-essential
+    - git
+    - mercurial
+    - zsh
+    - tmux
+    - vim-nox
+    - silversearcher-ag
+    - exuberant-ctags
   tags: packages, install
 
 - name: Install GUI packages
@@ -14,13 +21,8 @@
     - fonts-dejavu-extra
     - fonts-opensymbol
     - scrot
+    - vim-gtk
   tags: packages, install
-
-- name: Install Extra packages
-  apt: name={{item}} state=installed
-  with_items: "{{extra_packages}}"
-  tags: packages, install
-
 
 - name: Set default X session in lightdm
   when: gui.enabled and gui.session
@@ -33,3 +35,13 @@
   notify:
   - reload lightdm
 
+- apt_repository:
+    repo: "deb http://mozilla.debian.net/ {{ansible_distribution_release}}-backports firefox-release"
+  when: ansible_distribution_release != 'NA'
+  tags: repos
+
+- apt:
+    name: firefox
+    state: latest
+  tags: packages, install
+  when: ansible_distribution_release != 'NA'
