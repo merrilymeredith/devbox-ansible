@@ -1,0 +1,12 @@
+---
+- name: set up repo preferences
+  copy:
+    src: 'preferences.d/{{item}}'
+    dest: /etc/apt/preferences.d/
+  with_items:
+    - '10-testing'
+    - '20-unstable'
+
+- name: add unstable repo
+  apt_repository:
+    repo: "deb http://http.debian.net/debian unstable main"
