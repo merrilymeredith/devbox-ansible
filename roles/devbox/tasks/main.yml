@@ -3,4 +3,20 @@
 - include: dist-debian.yml
   when: ansible_os_family == 'Debian'
 
+- name: "ssh : Ensure known_hosts keys"
+  lineinfile:
+    dest: /etc/ssh/ssh_known_hosts
+    state: present
+    line: "{{item.value}}"
+    create: true
+    mode: 0644
+  with_dict: "{{hostkeys}}"
+  tags: ssh
 
+- name: "ssh : Purge invalid known_hosts keys"
+  lineinfile:
+    dest: /etc/ssh/ssh_known_hosts
+    state: absent
+    line: "{{item.value}}"
+  with_dict: "{{hostkeys_removed}}"
+  tags: ssh
