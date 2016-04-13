@@ -1,13 +1,5 @@
 ---
-
-gui:
-  enabled: false
-  session: "i3"
-
-extra_packages: []
-
-#dotfiles_repository
-dotfiles_checkout: default
+gui_enabled: false
 
 hostkeys: {}
 hostkeys_removed: {}
