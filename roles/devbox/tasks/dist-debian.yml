@@ -8,7 +8,7 @@
 
 - name: Install GUI packages
   when: gui.enabled
-  apt: name={{item}} state=installed default_release={{ansible_distribution_release}}-backports
+  apt: name={{item}} state=installed
   with_items:
     - i3
     - fonts-dejavu-extra
