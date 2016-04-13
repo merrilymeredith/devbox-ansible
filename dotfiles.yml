@@ -1,0 +1,32 @@
+---
+- hosts: devbox
+  gather_facts: false
+  tasks:
+    - name: Clone dotfiles
+      become_user: "{{user.name}}"
+      shell: >
+        hg clone -U {{dotfiles_repository | quote}} _dotfiles_
+        && mv _dotfiles_/.hg .
+        && rmdir _dotfiles_
+        && hg -R ~ update -C
+      args:
+        chdir: "~"
+        creates: "~/.hg"
+
+    - name: Update dotfiles
+      become_user: "{{user.name}}"
+      command: hg pull -u
+      args:
+        chdir: "~"
+      register: update_dotfiles
+      changed_when: update_dotfiles.stdout | match("added|updated")
+      failed_when: update_dotfiles.rc > 1
+
+    - name: Run homedir-setup
+      become_user: "{{user.name}}"
+      shell: bin/homedir-setup
+      args:
+        chdir: "~"
+      register: homedir_setup
+      changed_when: homedir_setup.stdout | match("Updating|Cloning")
+      failed_when: homedir_setup.rc != 0
