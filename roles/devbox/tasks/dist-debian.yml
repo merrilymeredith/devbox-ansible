@@ -31,5 +31,5 @@
     value: "{{gui.session}}"
     backup: true
   notify:
-  - restart lightdm
+  - reload lightdm
 
