@@ -24,7 +24,7 @@
       failed_when: update_dotfiles.rc > 1
 
     - name: Run bin/homedir-setup
-    - shell: bin/homedir-setup
+      shell: bin/homedir-setup
       args:
         chdir: "~"
       register: homedir_setup
