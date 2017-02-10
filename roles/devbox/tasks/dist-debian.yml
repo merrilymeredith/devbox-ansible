@@ -20,6 +20,7 @@
     - lightdm
     - rxvt-unicode-256color
     - i3
+    - xautolock
     - fonts-dejavu-extra
     - fonts-opensymbol
     - scrot

@@ -8,10 +8,13 @@
 - name: Install base packages
   macports: name={{item}} state=active
   with_items:
+    - zsh
     - MacVim
     - ctags
     - tmux
     - dejavu-fonts
+    - git
+    - mercurial
   tags: packages, install
 
 
