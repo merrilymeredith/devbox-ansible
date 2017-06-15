@@ -1,5 +1,6 @@
 ---
-- hosts: devbox
+- name: Devbox Setup
+  hosts: all
   become: yes
   roles:
     - devbox
