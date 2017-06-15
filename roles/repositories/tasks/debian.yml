@@ -3,7 +3,7 @@
 - name: add ansible/apt dependencies
   apt: name={{item}} state=installed
   with_items:
-    - ansible
+    - aptitude
     - python-apt
 
 - include: debian-stable.yml
