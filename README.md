@@ -1,7 +1,7 @@
 # Devbox playbook
 
 This is a playbook that installs dev tools and DE tools I like to have around 
-and sets up some other preferences like repositories, and drops in my dotfiles.  
+and sets up some other preferences like repositories, and drops in my dotfiles. 
 It's best-tested on Debian, but has some cases for OSX and FreeBSD too.
 
 The `gui_enabled` var controls whether or not to install graphical tools.
