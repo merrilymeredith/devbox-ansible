@@ -8,7 +8,10 @@ The `gui_enabled` var controls whether or not to install graphical tools.
 
 ## TODO
 
-- Adjust to work with ansible-pull via cloud-config userdata like this:
+- Adjust to work with ansible-pull via cloud-config userdata like below.
+  - looks for hostname.yml or local.yml
+  - no need to `become` at start, it will run as root
+  - ansible.cfg set to ask for sudo pw
 
 ```yaml
 #cloud-config
