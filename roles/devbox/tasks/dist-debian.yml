@@ -8,7 +8,7 @@
     - mercurial
     - zsh
     - tmux
-    - vim-nox
+    - vim
     - silversearcher-ag
     - exuberant-ctags
   tags: packages, install
@@ -26,6 +26,12 @@
     - scrot
     - vim-gtk
   tags: packages, install
+
+- name: Install non-gui packages
+  when: not gui_enabled
+  apt: name={{item}} state=installed
+  with_items:
+    - vim-nox
 
 - name: Set default X session in lightdm
   when: gui_enabled and gui_session
