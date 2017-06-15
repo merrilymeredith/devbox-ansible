@@ -1,7 +1,6 @@
 ---
-user:
-  name:    mhoward
-  comment: Meredith Howard
+user_name:    mhoward
+user_comment: Meredith Howard
 
 gui_session: "i3"
 

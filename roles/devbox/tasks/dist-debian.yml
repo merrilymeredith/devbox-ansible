@@ -11,6 +11,7 @@
     - vim
     - silversearcher-ag
     - exuberant-ctags
+    - unattended-upgrades
   tags: packages, install
 
 - name: Install GUI packages

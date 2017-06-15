@@ -2,8 +2,8 @@
 # Create/update my user, don't clobber my extra groups.
 - name: User setup
   user:
-    name: "{{user.name}}"
-    comment: "{{user.comment}}"
+    name: "{{user_name}}"
+    comment: "{{user_comment}}"
     shell: /bin/zsh
     groups: sudo
     append: true
@@ -13,14 +13,14 @@
 - name: "ssh : Pubkey for user"
   authorized_key:
     manage_dir: true
-    user: "{{user.name}}"
+    user: "{{user_name}}"
     key: "{{item}}"
   with_file:
-    - public_keys/{{user.name}}
+    - public_keys/{{user_name}}
   tags: user, ssh
 
 - name: Clone dotfiles
-  become: "{{user.name}}"
+  become: "{{user_name}}"
   shell: >
     hg clone -U {{dotfiles_default | quote}} _dotfiles_
     && mv _dotfiles_/.hg .
@@ -31,7 +31,7 @@
     creates: "~/.hg"
 
 - name: Assert hg sources
-  become: "{{user.name}}"
+  become: "{{user_name}}"
   ini_file:
     dest: "~/.hg/hgrc"
     section: paths
@@ -44,7 +44,7 @@
     - {name: 'default-push', url: "{{dotfiles_default_push}}"}
 
 - name: Update dotfiles
-  become: "{{user.name}}"
+  become: "{{user_name}}"
   command: hg pull -u
   args:
     chdir: "~"
@@ -53,7 +53,7 @@
   failed_when: update_dotfiles.rc > 1
 
 - name: Run bin/homedir-setup
-  become: "{{user.name}}"
+  become: "{{user_name}}"
   shell: bin/homedir-setup
   args:
     chdir: "~"
