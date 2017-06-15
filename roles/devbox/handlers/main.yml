@@ -1,4 +1,0 @@
----
-- name: reload lightdm
-  service: name=lightdm state=reloaded
-

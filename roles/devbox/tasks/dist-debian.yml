@@ -41,8 +41,6 @@
     option: user-session
     value: "{{gui_session}}"
     backup: true
-  notify:
-  - reload lightdm
 
 - name: Enable and start lightdm
   when: gui_enabled
