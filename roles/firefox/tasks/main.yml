@@ -4,10 +4,11 @@
   when: >
     ansible_os_family == 'Debian'
     and ansible_distribution_release != 'NA'
+    and ansible_distribution_release != 'stretch'
   tags: repos
 
 - package:
-    name: firefox
+    name: firefox-esr
     state: latest
   tags: packages, install
   when: >
