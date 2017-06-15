@@ -1,10 +1,10 @@
 ---
 
-- name: add aptitude
-  apt: name=aptitude state=installed
-
-- name: add python-apt
-  apt: name=python-apt state=installed
+- name: add ansible/apt dependencies
+  apt: name={{item}} state=installed
+  with_items:
+    - ansible
+    - python-apt
 
 - include: debian-stable.yml
   when: ansible_distribution_release != 'NA'
