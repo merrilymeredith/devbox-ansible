@@ -22,13 +22,26 @@
 - name: Clone dotfiles
   become: "{{user.name}}"
   shell: >
-    hg clone -U {{dotfiles_repository | quote}} _dotfiles_
+    hg clone -U {{dotfiles_default | quote}} _dotfiles_
     && mv _dotfiles_/.hg .
     && rmdir _dotfiles_
     && hg -R ~ update -C master
   args:
     chdir: "~"
     creates: "~/.hg"
+
+- name: Assert hg sources
+  become: "{{user.name}}"
+  ini_file:
+    dest: "~/.hg/hgrc"
+    section: paths
+    option: "{{item.name}}"
+    value:  "{{item.url}}"
+    mode: 0640
+    create: no
+  with_items:
+    - {name: 'default',      url: "{{dotfiles_default}}"}
+    - {name: 'default-push', url: "{{dotfiles_default_push}}"}
 
 - name: Update dotfiles
   become: "{{user.name}}"

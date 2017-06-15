@@ -5,7 +5,8 @@ user:
 
 gui_session: "i3"
 
-dotfiles_repository: ssh://mhoward@roomag.org/proj/dotfiles
+dotfiles_default: https://bitbucket.org/merrilymeredith/dotfiles
+dotfiles_default_push: ssh://mhoward@roomag.org/proj/dotfiles
 
 hostkeys:
   roomag.org:
