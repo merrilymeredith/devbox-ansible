@@ -33,6 +33,7 @@
   apt: name={{item}} state=installed
   with_items:
     - vim-nox
+  tags: packages, install
 
 - name: Set default X session in lightdm
   when: gui_enabled and gui_session

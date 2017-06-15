@@ -29,6 +29,7 @@
   args:
     chdir: "~"
     creates: "~/.hg"
+  tags: user, dotfiles
 
 - name: Assert hg sources
   become: "{{user_name}}"
@@ -42,6 +43,7 @@
   with_items:
     - {name: 'default',      url: "{{dotfiles_default}}"}
     - {name: 'default-push', url: "{{dotfiles_default_push}}"}
+  tags: user, dotfiles
 
 - name: Update dotfiles
   become: "{{user_name}}"
@@ -51,6 +53,7 @@
   register: update_dotfiles
   changed_when: update_dotfiles.stdout | match("added|updated")
   failed_when: update_dotfiles.rc > 1
+  tags: user, dotfiles
 
 - name: Run bin/homedir-setup
   become: "{{user_name}}"
@@ -60,3 +63,4 @@
   register: homedir_setup
   changed_when: homedir_setup.stdout | match("Updating|Cloning")
   failed_when: homedir_setup.rc != 0
+  tags: user, dotfiles
