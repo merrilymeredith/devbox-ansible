@@ -19,9 +19,9 @@ packages:
   - ansible
   - git
 runcmd:
-  - echo -e "[localhost]\n127.0.0.1 ansible_connection=local" >> /etc/ansible/hosts
+  - echo -e '[localhost]\n127.0.0.1 ansible_connection=local' >> /etc/ansible/hosts
   - ssh-keyscan github.com >> /etc/ssh/ssh_known_hosts
   - mkdir /etc/ansible/web
-  - ansible-pull -d /etc/ansible/web/ -U <git repo URL>
+  - ansible-pull -d /etc/ansible/web -U https://github.com/merrilymeredith/devbox-ansible.git
 ```
 
