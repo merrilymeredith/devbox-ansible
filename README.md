@@ -8,8 +8,7 @@ The `gui_enabled` var controls whether or not to install graphical tools.
 
 ## TODO
 
-- Switch this to get / make a git mirror for the following:
-- Adjust to work with ansible-pull via a cloud-config userdata like this:
+- Adjust to work with ansible-pull via cloud-config userdata like this:
 
 ```yaml
 #cloud-config
