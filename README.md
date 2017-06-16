@@ -6,12 +6,22 @@ It's best-tested on Debian, but has some cases for OSX and FreeBSD too.
 
 The `gui_enabled` var controls whether or not to install graphical tools.
 
-## TODO
+# Running
 
-- Adjust to work with ansible-pull via cloud-config userdata like below.
-  - looks for hostname.yml or local.yml
-  - no need to `become` at start, it will run as root
-  - ansible.cfg set to ask for sudo pw
+## Push
+
+1. Create inventory file with target host.
+2. If we can ssh as root with key, use `-u root`.  If we can sudo, use `-bK`.
+3. GUI box? `-e gui_enabled=true`
+4. `ansible-playbook -i $inventory $args local.yml`
+
+## Pull
+
+1. Install `ansible`, `git`
+2. `echo -e '[localhost]\n127.0.0.1 ansible_connection=local' >> /etc/ansible/hosts`
+2. `ansible-pull -U https://github.com/merrilymeredith/devbox-ansible.git`
+
+### cloud-init
 
 ```yaml
 #cloud-config
@@ -20,8 +30,6 @@ packages:
   - git
 runcmd:
   - echo -e '[localhost]\n127.0.0.1 ansible_connection=local' >> /etc/ansible/hosts
-  - ssh-keyscan github.com >> /etc/ssh/ssh_known_hosts
-  - mkdir /etc/ansible/web
-  - ansible-pull -d /etc/ansible/web -U https://github.com/merrilymeredith/devbox-ansible.git
+  - ansible-pull -U https://github.com/merrilymeredith/devbox-ansible.git
 ```
 
