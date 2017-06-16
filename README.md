@@ -1,3 +1,5 @@
+
+
 # Devbox playbook
 
 This is a playbook that installs dev tools and DE tools I like to have around 
@@ -18,7 +20,7 @@ The `gui_enabled` var controls whether or not to install graphical tools.
 ## Pull
 
 1. Install `ansible`, `git`
-2. `echo -e '[localhost]\n127.0.0.1 ansible_connection=local' >> /etc/ansible/hosts`
+2. `echo -e '[localhost]\nlocalhost ansible_connection=local' >> /etc/ansible/hosts`
 2. `ansible-pull -U https://github.com/merrilymeredith/devbox-ansible.git`
 
 ### cloud-init
@@ -29,7 +31,10 @@ packages:
   - ansible
   - git
 runcmd:
-  - echo -e '[localhost]\n127.0.0.1 ansible_connection=local' >> /etc/ansible/hosts
+  - echo -e '[localhost]\nlocalhost ansible_connection=local' >> /etc/ansible/hosts
   - ansible-pull -U https://github.com/merrilymeredith/devbox-ansible.git
 ```
 
+# TODO
+
+- Make pull config install cron entry?
