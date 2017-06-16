@@ -31,10 +31,11 @@ packages:
   - ansible
   - git
 runcmd:
-  - echo -e '[localhost]\nlocalhost ansible_connection=local' >> /etc/ansible/hosts
+  - echo '[localhost]\nlocalhost ansible_connection=local' >> /etc/ansible/hosts
   - ansible-pull -U https://github.com/merrilymeredith/devbox-ansible.git
 ```
 
 # TODO
 
 - Make pull config install cron entry?
+- Debian 8 ansible is still 1.7 lol
