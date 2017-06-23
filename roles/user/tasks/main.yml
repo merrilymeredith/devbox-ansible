@@ -68,3 +68,6 @@
   changed_when: homedir_setup.stdout | match("Updating|Cloning")
   failed_when: homedir_setup.rc != 0
   tags: user, dotfiles
+
+- include: disable-stock.yml
+  when: disable_stock_users
