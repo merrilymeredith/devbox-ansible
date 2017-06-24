@@ -1,0 +1,29 @@
+---
+- name: "Bootstrap: Ansible control user"
+  user:
+    name: ansible
+    comment: "Ansible Controller"
+    home: /var/lib/ansible
+    createhome: true
+    append: true
+    system: true
+    state: present
+
+- name: "Bootstrap : ansible pubkeys"
+  authorized_key:
+    manage_dir: true
+    user: ansible
+    key: "{{item}}"
+  with_file:
+    - 'public_keys/ansible'
+
+- name: "Bootstrap : ansible sudo"
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^ansible'
+    line: 'ansible ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf "%s"'
+
+- include: disable-stock.yml
+  when: disable_stock_users
