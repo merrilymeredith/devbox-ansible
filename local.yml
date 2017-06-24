@@ -2,6 +2,8 @@
 - name: Devbox Setup
   hosts: all
   roles:
+    - role: bootstrap
+      tags: bootstrap
     - devbox
     - user
 
