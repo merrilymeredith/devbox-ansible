@@ -4,5 +4,4 @@
   roles:
     - devbox
     - user
-    - {role: firefox, when: gui_enabled}
 

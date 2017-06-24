@@ -26,6 +26,7 @@
     - fonts-opensymbol
     - scrot
     - vim-gtk
+    - firefox-esr
   tags: packages, install
 
 - name: Install non-gui packages
