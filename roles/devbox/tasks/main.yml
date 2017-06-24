@@ -3,7 +3,7 @@
 - include: dist-debian.yml
   when: ansible_os_family == 'Debian'
 
-- name: "ssh : Sync system ssh_known_hosts"
+- name: "Sync system ssh_known_hosts"
   copy:
     src:  ssh_known_hosts
     dest: /etc/ssh/ssh_known_hosts

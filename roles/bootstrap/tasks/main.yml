@@ -1,5 +1,5 @@
 ---
-- name: "Bootstrap: Ansible control user"
+- name: "Ansible control user"
   user:
     name: ansible
     comment: "Ansible Controller"
@@ -9,7 +9,7 @@
     system: true
     state: present
 
-- name: "Bootstrap : ansible pubkeys"
+- name: "Ansible pubkeys"
   authorized_key:
     manage_dir: true
     user: ansible
@@ -17,7 +17,7 @@
   with_file:
     - 'public_keys/ansible'
 
-- name: "Bootstrap : ansible sudo"
+- name: "Ansible sudo"
   lineinfile:
     dest: /etc/sudoers
     state: present

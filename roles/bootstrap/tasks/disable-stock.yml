@@ -1,5 +1,5 @@
 ---
-- name: "Bootstrap: Disable stock users"
+- name: "Disable stock users"
   shell: usermod -e 1 {{item}}
   ignore_errors: true
   with_items:

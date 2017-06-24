@@ -1,6 +1,6 @@
 ---
 # Create/update my user, don't clobber my extra groups.
-- name: User setup
+- name: "User setup"
   user:
     name: "{{user_name}}"
     comment: "{{user_comment}}"
@@ -10,7 +10,7 @@
   register: user
   tags: user
 
-- name: "ssh : Pubkey for user"
+- name: "User authorized_keys"
   authorized_key:
     manage_dir: true
     user: "{{user_name}}"
@@ -19,7 +19,7 @@
     - public_keys/{{user_name}}
   tags: user, ssh
 
-- name: Clone dotfiles
+- name: "Clone dotfiles"
   become: true
   become_user: "{{user_name}}"
   shell: >
@@ -32,7 +32,7 @@
     creates: "{{user.home}}/.hg"
   tags: user, dotfiles
 
-- name: Assert hg sources
+- name: "Dotfiles hg sources"
   become: true
   become_user: "{{user_name}}"
   ini_file:
@@ -47,7 +47,7 @@
     - {name: 'default-push', url: "{{dotfiles_default_push}}"}
   tags: user, dotfiles
 
-- name: Update dotfiles
+- name: "Update dotfiles"
   become: true
   become_user: "{{user_name}}"
   command: hg pull -u
@@ -58,7 +58,7 @@
   failed_when: update_dotfiles.rc > 1
   tags: user, dotfiles
 
-- name: Run bin/homedir-setup
+- name: "Run bin/homedir-setup"
   become: true
   become_user: "{{user_name}}"
   shell: bin/homedir-setup
