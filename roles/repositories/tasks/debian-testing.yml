@@ -9,4 +9,5 @@
 
 - name: add unstable repo
   apt_repository:
-    repo: "deb http://http.debian.net/debian unstable main"
+    filename: "debian-unstable"
+    repo: "deb https://deb.debian.org/debian unstable main"

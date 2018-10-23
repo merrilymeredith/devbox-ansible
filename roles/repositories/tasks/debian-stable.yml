@@ -1,11 +1,13 @@
 ---
 - name: "add backports repo"
   apt_repository:
+    filename: "debian-backports"
     repo: "deb http://cdn-fastly.deb.debian.org/debian {{ansible_distribution_release}}-backports main"
     update_cache: false
 
 - name: "add pgdg repo"
   apt_repository:
+    filename: "pgdg"
     repo: "deb http://apt.postgresql.org/pub/repos/apt/ {{ansible_distribution_release}}-pgdg main"
     update_cache: false
   when: ansible_architecture in ["i386", "x86_64"]
