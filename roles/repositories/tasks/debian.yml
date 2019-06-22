@@ -3,6 +3,7 @@
 - name: add ansible/apt dependencies
   apt: name={{item}} state=installed
   with_items:
+    - apt-transport-https
     - aptitude
     - python-apt
 
