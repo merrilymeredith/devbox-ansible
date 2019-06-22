@@ -1,39 +1,42 @@
 ---
 
 - name: Install base packages
-  apt: name={{item}} state=installed
-  with_items:
-    - build-essential
-    - git
-    - mercurial
-    - zsh
-    - tmux
-    - vim
-    - silversearcher-ag
-    - exuberant-ctags
-    - unattended-upgrades
   tags: packages, install
+  apt:
+    state: installed
+    name:
+      - build-essential
+      - git
+      - mercurial
+      - zsh
+      - tmux
+      - vim
+      - silversearcher-ag
+      - exuberant-ctags
+      - unattended-upgrades
 
 - name: Install GUI packages
-  when: gui_enabled
-  apt: name={{item}} state=installed
-  with_items:
-    - lightdm
-    - rxvt-unicode-256color
-    - i3
-    - xautolock
-    - fonts-dejavu-extra
-    - fonts-opensymbol
-    - scrot
-    - vim-gtk
   tags: packages, install
+  when: gui_enabled
+  apt:
+    state: installed
+    name:
+      - lightdm
+      - rxvt-unicode-256color
+      - i3
+      - xautolock
+      - fonts-dejavu-extra
+      - fonts-opensymbol
+      - scrot
+      - vim-gtk
 
 - name: Install non-gui packages
-  when: not gui_enabled
-  apt: name={{item}} state=installed
-  with_items:
-    - vim-nox
   tags: packages, install
+  when: not gui_enabled
+  apt:
+    state: installed
+    name:
+      - vim-nox
 
 - name: Set default X session in lightdm
   when: gui_enabled and gui_session
