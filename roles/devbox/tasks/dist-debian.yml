@@ -46,10 +46,3 @@
     option: user-session
     value: "{{gui_session}}"
     backup: true
-
-- name: Enable and start lightdm
-  when: gui_enabled
-  service:
-    name: lightdm
-    enabled: yes
-    state: started
