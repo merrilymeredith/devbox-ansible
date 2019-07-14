@@ -2,8 +2,8 @@
 # Create/update my user, don't clobber my extra groups.
 - name: "User setup"
   user:
-    name: "{{user_name}}"
-    comment: "{{user_comment}}"
+    name: "{{ user_name }}"
+    comment: "{{ user_comment }}"
     shell: /bin/zsh
     groups: sudo
     append: true
@@ -13,46 +13,46 @@
 - name: "User authorized_keys"
   authorized_key:
     manage_dir: true
-    user: "{{user_name}}"
-    key: "{{item}}"
+    user: "{{ user_name }}"
+    key: "{{ item }}"
   with_file:
-    - public_keys/{{user_name}}
+    - public_keys/{{ user_name }}
   tags: user, ssh
 
 - name: "Clone dotfiles"
   become: true
-  become_user: "{{user_name}}"
+  become_user: "{{ user_name }}"
   shell: >
-    hg clone -U {{dotfiles_default | quote}} _dotfiles_
+    hg clone -U {{ dotfiles_default | quote }} _dotfiles_
     && mv _dotfiles_/.hg .
     && rmdir _dotfiles_
     && hg -R ~ update -C master
   args:
-    chdir: "{{user.home}}"
-    creates: "{{user.home}}/.hg"
+    chdir: "{{ user.home }}"
+    creates: "{{ user.home }}/.hg"
   tags: user, dotfiles
 
 - name: "Dotfiles hg sources"
   become: true
-  become_user: "{{user_name}}"
+  become_user: "{{ user_name }}"
   ini_file:
-    dest: "{{user.home}}/.hg/hgrc"
+    dest: "{{ user.home }}/.hg/hgrc"
     section: paths
-    option: "{{item.name}}"
-    value:  "{{item.url}}"
+    option: "{{ item.name }}"
+    value:  "{{ item.url }}"
     mode: 0640
     create: no
   with_items:
-    - {name: 'default',      url: "{{dotfiles_default}}"}
-    - {name: 'default-push', url: "{{dotfiles_default_push}}"}
+    - {name: 'default',      url: "{{ dotfiles_default }}"}
+    - {name: 'default-push', url: "{{ dotfiles_default_push }}"}
   tags: user, dotfiles
 
 - name: "Update dotfiles"
   become: true
-  become_user: "{{user_name}}"
+  become_user: "{{ user_name }}"
   command: hg pull -u
   args:
-    chdir: "{{user.home}}"
+    chdir: "{{ user.home }}"
   register: update_dotfiles
   changed_when: update_dotfiles.stdout | match("added|updated")
   failed_when: update_dotfiles.rc > 1
@@ -60,10 +60,10 @@
 
 - name: "Run bin/homedir-setup"
   become: true
-  become_user: "{{user_name}}"
+  become_user: "{{ user_name }}"
   shell: bin/homedir-setup
   args:
-    chdir: "{{user.home}}"
+    chdir: "{{ user.home }}"
   register: homedir_setup
   changed_when: homedir_setup.stdout | match("Updating|Cloning")
   failed_when: homedir_setup.rc != 0

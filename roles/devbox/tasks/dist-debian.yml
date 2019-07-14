@@ -44,5 +44,5 @@
     dest: /etc/lightdm/lightdm.conf
     section: SeatDefaults
     option: user-session
-    value: "{{gui_session}}"
+    value: "{{ gui_session }}"
     backup: true

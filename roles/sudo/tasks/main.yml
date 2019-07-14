@@ -1,8 +1,9 @@
 ---
 
-- package:
+- name: sudo package
+  package:
     name: sudo
-    state: latest
+    state: present
   tags: packages, install
 
 - name: sudo group
