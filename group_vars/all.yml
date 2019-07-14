@@ -2,8 +2,6 @@
 user_name:    mhoward
 user_comment: Meredith Howard
 
-gui_session: "i3"
-
 dotfiles_default: https://bitbucket.org/merrilymeredith/dotfiles
 dotfiles_default_push: ssh://mhoward@roomag.org/proj/dotfiles
 

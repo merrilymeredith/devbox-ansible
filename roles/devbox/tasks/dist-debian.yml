@@ -38,11 +38,3 @@
     name:
       - vim-nox
 
-- name: Set default X session in lightdm
-  when: gui_enabled and gui_session
-  ini_file:
-    dest: /etc/lightdm/lightdm.conf
-    section: SeatDefaults
-    option: user-session
-    value: "{{ gui_session }}"
-    backup: true
