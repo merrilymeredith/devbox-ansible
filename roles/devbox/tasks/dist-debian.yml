@@ -10,7 +10,7 @@
       - mercurial
       - zsh
       - tmux
-      - vim
+      - vim-nox
       - silversearcher-ag
       - exuberant-ctags
       - unattended-upgrades
@@ -24,17 +24,9 @@
       - lightdm
       - rxvt-unicode-256color
       - i3
+      - j4-dmenu-desktop
       - xautolock
       - fonts-dejavu-extra
       - fonts-opensymbol
       - scrot
       - vim-gtk
-
-- name: Install non-gui packages
-  tags: packages, install
-  when: not gui_enabled
-  apt:
-    state: installed
-    name:
-      - vim-nox
-
