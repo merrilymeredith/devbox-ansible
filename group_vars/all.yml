@@ -6,3 +6,7 @@ gui_session: "i3"
 
 dotfiles_default: https://bitbucket.org/merrilymeredith/dotfiles
 dotfiles_default_push: ssh://mhoward@roomag.org/proj/dotfiles
+
+bootstrap_ansible_controller: false
+disable_stock_users: true
+

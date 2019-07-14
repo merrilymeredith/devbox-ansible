@@ -2,8 +2,13 @@
 - name: Devbox Setup
   hosts: all
   roles:
-    - role: bootstrap
-      tags: bootstrap
     - devbox
     - user
+  tasks:
+    - include_role:
+        name: bootstrap
+      when: bootstrap_ansible_controller
+    - include_role:
+        name: disable_stock_users
+      when: disable_stock_users
 
