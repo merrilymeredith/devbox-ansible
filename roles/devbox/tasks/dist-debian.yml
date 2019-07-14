@@ -10,7 +10,7 @@
 - name: Install base packages
   tags: packages, install
   apt:
-    state: installed
+    state: present
     name:
       - build-essential
       - git
@@ -26,7 +26,7 @@
   tags: packages, install
   when: gui_enabled
   apt:
-    state: installed
+    state: present
     name:
       - lightdm
       - rxvt-unicode-256color

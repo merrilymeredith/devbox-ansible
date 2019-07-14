@@ -54,7 +54,7 @@
   args:
     chdir: "{{ user.home }}"
   register: update_dotfiles
-  changed_when: update_dotfiles.stdout | match("added|updated")
+  changed_when: update_dotfiles.stdout is match("added|updated")
   failed_when: update_dotfiles.rc > 1
   tags: user, dotfiles
 
@@ -65,6 +65,6 @@
   args:
     chdir: "{{ user.home }}"
   register: homedir_setup
-  changed_when: homedir_setup.stdout | match("Updating|Cloning")
+  changed_when: homedir_setup.stdout is match("Updating|Cloning")
   failed_when: homedir_setup.rc != 0
   tags: user, dotfiles
