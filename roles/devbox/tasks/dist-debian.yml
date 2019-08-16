@@ -20,7 +20,6 @@
       - vim-nox
       - silversearcher-ag
       - exuberant-ctags
-      - unattended-upgrades
 
 - name: Install GUI packages
   tags: packages, install
